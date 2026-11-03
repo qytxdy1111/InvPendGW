@@ -1,0 +1,77 @@
+# Gowin EDA generated projects and implementation results
+FPGA/build/
+FPGA/impl/
+FPGA/impl_*/
+FPGA/build_*/
+**/gwsynthesis/
+**/pnr/
+**/temp/
+
+# Generated programming files and netlists
+*.fs
+*.bin
+*.binx
+*.bit
+*.jed
+*.pof
+*.sof
+*.vg
+*.vo
+*.vho
+*.db
+
+# Gowin reports, logs, and user-local settings
+*.gprj.user
+*.log
+*.jou
+*.rpt
+*.rpt.txt
+*.rpt.html
+*.html
+*.timing_paths
+*.tr
+*.tr.html
+*.power.html
+*.pin.html
+*.xml
+*.json
+
+# Simulation outputs and caches
+FPGA/xsim.dir/
+FPGA/.Xil/
+FPGA/sim/out/
+*.vvp
+*.wdb
+*.wcfg
+*.vcd
+*.fst
+*.pb
+*.sdb
+*.xdbg
+*.dbg
+*.mem
+*.reloc
+*.rtti
+*.svtype
+*.type
+xvlog.log
+xelab.log
+xsim.log
+xsim.jou
+
+# Editor and operating-system files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archives and temporary files
+*.rar
+*.zip
+*.7z
+*.tmp
+*.bak
