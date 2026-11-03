@@ -1,0 +1,86 @@
+// ===== 管脚约束 (pin.cst) =====
+// 端口名必须与顶层 main.v 完全一致
+// 板卡：J280 姿态控制系统（GW2A-LV55PG484C8/I7）
+// ADC 引脚取自官方 Interface_test 例程的 PnR 报告（fo_rip_top）
+
+// ---- 系统时钟 / 复位 ----
+IO_LOC "clk" M19;
+IO_PORT "clk" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "rst_n" AB3;
+IO_PORT "rst_n" IO_TYPE=LVCMOS15 PULL_MODE=UP BANK_VCCIO=1.5;
+// SW1: active-low mode button, per board pinout.
+IO_LOC "mode_button_n" T18;
+IO_PORT "mode_button_n" IO_TYPE=LVCMOS15 PULL_MODE=UP BANK_VCCIO=1.5;
+
+// ---- 编码器（电机轴，通道 1）----
+IO_LOC "enc_a" Y20;
+IO_PORT "enc_a" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "enc_b" AA20;
+IO_PORT "enc_b" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+
+// ---- 电位器角度 ADC（3PA1030，10 位并行）----
+IO_LOC "adc_data_in[0]" L21;
+IO_PORT "adc_data_in[0]" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "adc_data_in[1]" M21;
+IO_PORT "adc_data_in[1]" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "adc_data_in[2]" J20;
+IO_PORT "adc_data_in[2]" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "adc_data_in[3]" J19;
+IO_PORT "adc_data_in[3]" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "adc_data_in[4]" D19;
+IO_PORT "adc_data_in[4]" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "adc_data_in[5]" H18;
+IO_PORT "adc_data_in[5]" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "adc_data_in[6]" H19;
+IO_PORT "adc_data_in[6]" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "adc_data_in[7]" G19;
+IO_PORT "adc_data_in[7]" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "adc_data_in[8]" G17;
+IO_PORT "adc_data_in[8]" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "adc_data_in[9]" E19;
+IO_PORT "adc_data_in[9]" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "adc_clk" G18;
+IO_PORT "adc_clk" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8 BANK_VCCIO=3.3;
+IO_LOC "adc_oe_n" H20;
+IO_PORT "adc_oe_n" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8 BANK_VCCIO=3.3;
+// 官方 PnR 报告：adc_stby_n 位于 T5，1.8V bank
+IO_LOC "adc_stby_n" T5;
+IO_PORT "adc_stby_n" IO_TYPE=LVCMOS18 PULL_MODE=UP DRIVE=8 BANK_VCCIO=1.8;
+
+// ---- 电机驱动（TB6612 通道 A）----
+IO_LOC "ain1" Y17;
+IO_PORT "ain1" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8 BANK_VCCIO=3.3;
+IO_LOC "ain2" Y19;
+IO_PORT "ain2" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8 BANK_VCCIO=3.3;
+IO_LOC "pwma" Y18;
+IO_PORT "pwma" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=4 BANK_VCCIO=3.3;
+
+// ---- 电机驱动（TB6612 通道 B，调试期与 A 同指令，引脚取自官方 fo_rip_top.cst）----
+IO_LOC "bn1" V15;
+IO_PORT "bn1" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8 BANK_VCCIO=3.3;
+IO_LOC "bn2" AA17;
+IO_PORT "bn2" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8 BANK_VCCIO=3.3;
+IO_LOC "pwmb" V14;
+IO_PORT "pwmb" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=4 BANK_VCCIO=3.3;
+
+// ---- 串口（调试打印）----
+IO_LOC "uart_tx" K20;
+IO_PORT "uart_tx" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+
+// ---- 陶晶驰串口屏：FPGA RX=V13，FPGA TX=V12，115200 8N1 ----
+// 屏 TX -> FPGA hmi_rx(V13)，FPGA hmi_tx(V12) -> 屏 RX；两端必须共地。
+IO_LOC "hmi_rx" V13;
+IO_PORT "hmi_rx" IO_TYPE=LVCMOS33 PULL_MODE=UP BANK_VCCIO=3.3;
+IO_LOC "hmi_tx" V12;
+IO_PORT "hmi_tx" IO_TYPE=LVCMOS33 PULL_MODE=UP DRIVE=8 BANK_VCCIO=3.3;
+
+// ---- LED（J280 的 LED 在 1.5V bank，低电平点亮）----
+IO_LOC "led[0]" U18;
+IO_PORT "led[0]" IO_TYPE=LVCMOS15 PULL_MODE=UP DRIVE=8 BANK_VCCIO=1.5;
+IO_LOC "led[1]" U19;
+IO_PORT "led[1]" IO_TYPE=LVCMOS15 PULL_MODE=UP DRIVE=8 BANK_VCCIO=1.5;
+IO_LOC "led[2]" U17;
+IO_PORT "led[2]" IO_TYPE=LVCMOS15 PULL_MODE=UP DRIVE=8 BANK_VCCIO=1.5;
+IO_LOC "led[3]" T17;
+IO_PORT "led[3]" IO_TYPE=LVCMOS15 PULL_MODE=UP DRIVE=8 BANK_VCCIO=1.5;
+
